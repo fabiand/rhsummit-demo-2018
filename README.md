@@ -56,12 +56,20 @@ You have access to the following projects and can switch between them with 'oc p
     openshift-web-console
 
 Using project "myproject".
-Web console URL: https://127.0.0.1:8443/console/
+OpenShift server started.
 
-Config is at host directory /var/lib/origin/openshift.local.config
-Volumes are at host directory /var/lib/origin/openshift.local.volumes
-Persistent volumes are at host directory /var/lib/origin/openshift.local.pv
-Data is at host directory /home/bob/cnv/oc-kubevirt-up/_data
+The server is accessible via web console at:
+    https://127.0.0.1:8443
+
+You are logged in as:
+    User:     developer
+    Password: <any value>
+
+To login as administrator:
+    oc login -u system:admin
+
+INFO For CNV: Log into the web console as 'developer' and go to https://127.0.0.1:8443/console/project/myproject/overview
+$
 ```
 
 ## Cleanup
