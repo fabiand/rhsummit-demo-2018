@@ -28,6 +28,7 @@ info "Setting up the CNV Demo"
 mkdir -p $DATA_DIR
 
 {
+  set -x
   if oc cluster status ; then
     info "Reusing the existing 'oc cluster up setup'"
     info "NOTE: It is more likely that CNV will fail to work on a pre-configured 'oc cluster' setup"

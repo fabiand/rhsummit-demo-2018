@@ -14,6 +14,7 @@ This does not include:
 
 - CDI - Due to issues to deploy it robust in a generic setup
   [This script](https://github.com/aglitke/oc-kubevirt-up) also sets up the CDI, but is not as robust.
+- Metrics - Unstable to deploy
 
 # Requirements
 
