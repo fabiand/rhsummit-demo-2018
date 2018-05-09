@@ -25,7 +25,8 @@ This does not include:
 
 # Usage
 
-> **Note:** Take a look at the `.logs` file in case of an error
+> **Note:** Take a look at the `.logs` file in case of an error or use
+> `tail -f .logs` during deployment to view the status.
 
 The `oc-kubevirt` script does all necessary steps:
 
