@@ -72,6 +72,11 @@ INFO For CNV: Log into the web console as 'developer' and go to https://127.0.0.
 $
 ```
 
+## User Guide
+
+Once started, thre is the [KubeVirt user guide](http://docs.kubevirt.io/) to
+work with the new entities.
+
 ## Cleanup
 
 > **Note:** This will remove all `oc cluster` related data.
