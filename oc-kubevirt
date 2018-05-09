@@ -73,6 +73,7 @@ mkdir -p $DATA_DIR
   #
   info "Using demo OpenShift Web Console image"
   oc set image -n openshift-web-console deployment webconsole webconsole=mutism/origin-web-console:demo
+  set +x
 } > .logs 2>&1
 
 #
@@ -81,3 +82,5 @@ mkdir -p $DATA_DIR
 info "Done, connection details:"
 oc login -u system:admin
 grep -A 10 started .logs
+echo ""
+info "For CNV: Log into the web console as 'developer' and go to https://127.0.0.1:8443/console/project/myproject/overview"
