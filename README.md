@@ -72,6 +72,9 @@ INFO For CNV: Log into the web console as 'developer' and go to https://127.0.0.
 $
 ```
 
+> **Note:** The virtual machines and templates are accessible in the project
+> [_My Project_](https://127.0.0.1:8443/console/project/myproject/overview)
+
 ## User Guide
 
 Once started, thre is the [KubeVirt user guide](http://docs.kubevirt.io/) to
