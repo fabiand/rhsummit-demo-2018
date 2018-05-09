@@ -29,7 +29,7 @@ This does not include:
 The `oc-kubevirt` script does all necessary steps:
 
 ```bash
-$ oc-kubevirt
+$ ./oc-kubevirt
 INFO Setting up the CNV Demo
 INFO Setting up 'oc cluster up'
 INFO Waiting for OpenShift to be fully up
@@ -60,4 +60,14 @@ Config is at host directory /var/lib/origin/openshift.local.config
 Volumes are at host directory /var/lib/origin/openshift.local.volumes
 Persistent volumes are at host directory /var/lib/origin/openshift.local.pv
 Data is at host directory /home/bob/cnv/oc-kubevirt-up/_data
+```
+
+## Cleanup
+
+> **Note:** This will remove all `oc cluster` related data.
+
+The setup can be cleaned using:
+
+```bash
+$ ./oc-cluster clean
 ```
