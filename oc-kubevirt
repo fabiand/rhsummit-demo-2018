@@ -30,6 +30,7 @@ mkdir -p $DATA_DIR
 {
   if oc cluster status ; then
     info "Reusing the existing 'oc cluster up setup'"
+    info "NOTE: It is more likely that CNV will fail to work on a pre-configured 'oc cluster' setup"
   else
     info "Setting up 'oc cluster up'"
     oc cluster up --service-catalog --host-data-dir=$DATA_DIR --use-existing-config=true --skip-registry-check
