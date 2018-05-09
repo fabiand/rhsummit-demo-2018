@@ -1,0 +1,111 @@
+---
+apiVersion: kubevirt.io/v1alpha1
+kind: OfflineVirtualMachine
+metadata:
+  name: testvm
+  namespace: myproject
+spec:
+  running: false
+  selector:
+    matchLabels:
+      guest: testvm
+  template:
+    metadata:
+      labels: 
+        guest: testvm
+        kubevirt.io/size: small
+    spec:
+      domain:
+        devices:
+          disks:
+            - name: registrydisk
+              volumeName: registryvolume
+              disk:
+                bus: virtio
+            - name: cloudinitdisk
+              volumeName: cloudinitvolume
+              disk:
+                bus: virtio
+      volumes:
+        - name: registryvolume
+          registryDisk:
+            image: kubevirt/cirros-registry-disk-demo
+        - name: cloudinitvolume
+          cloudInitNoCloud:
+            userDataBase64: SGkuXG4= 
+---
+apiVersion: kubevirt.io/v1alpha1
+kind: VirtualMachinePreset
+metadata:
+  name: small
+  namespace: myproject
+spec:
+  selector:
+    matchLabels:
+      kubevirt.io/size: small
+  domain:
+    resources:
+      requests:
+        memory: 64M
+    devices: {}
+---
+apiVersion: v1
+kind: Template
+metadata:
+  name: cirros-vm-template
+  namespace: myproject
+  annotations:
+    description: |
+      OCP KubeVirt CirrOS VM template
+    openshift.io/display-name: CirrOS Virtual Machine
+    tags: "kubevirt,ocp,template,linux"
+    iconClass: icon-other-linux
+  labels:
+    kubevirt.io/os: cirros
+    miq.github.io/kubevirt-is-vm-template: "true"
+objects:
+- apiVersion: kubevirt.io/v1alpha1
+  kind: OfflineVirtualMachine
+  metadata:
+    name: ${NAME}
+    labels:
+      kubevirt-ovm: ovm-${NAME}
+  spec:
+    running: false
+    template:
+      metadata:
+        labels:
+          kubevirt-ovm: ovm-${NAME}
+      spec:
+        domain:
+          cpu:
+            cores: ${{CPU_CORES}}
+          resources:
+            requests:
+              memory: ${{MEMORY}}
+          devices:
+            disks:
+              - name: disk0
+                volumeName: registryvolume
+                disk:
+                  bus: virtio
+              - name: disk1
+                volumeName: cloudinitvolume
+                disk:
+                  bus: virtio
+        volumes:
+          - name: registryvolume
+            registryDisk:
+              image: kubevirt/cirros-registry-disk-demo
+          - name: cloudinitvolume
+            cloudInitNoCloud:
+              userDataBase64: SGkuXG4= 
+parameters:
+- name: NAME
+  description: Name for the new VM
+- name: MEMORY
+  description: Amount of memory
+  value: "512Mi"
+- name: CPU_CORES
+  description: Amount of cores
+  value: "2"
