@@ -5,64 +5,72 @@
 exec 3>&1
 info() { echo -e "INFO $@" >&3 ; }
 
-set -e
-
 DATA_DIR="$PWD/_data"
 
-info "Setting up the CNV Demo"
 
+#
+# Clean
+#
 if [[ "$1" == "clean" ]]; then
   oc cluster down
   sudo rm -rf $DATA_DIR /var/lib/origin/openshift.local.config/  /var/lib/origin/openshift.local.pv /var/lib/origin/openshift.local.volumes
   exit 0
 fi
 
+
+
+#
+# Setup
+#
+set -e
+
+info "Setting up the CNV Demo"
 mkdir -p $DATA_DIR
 
 {
-if oc cluster status ; then
-  info "Reusing the existing 'oc cluster up setup'"
-else
-  info "Setting up 'oc cluster up'"
-  oc cluster up --service-catalog --host-data-dir=$DATA_DIR --use-existing-config=true --skip-registry-check
-  info "Waiting for OpenShift to be fully up"
-  {
-   N=60
-   while [[ "$N" -gt 0 ]] ;
-   do
-     oc cluster status && break
-     sleep 1
-     N=$(( $N - 1 ))
-   done
-  } > /dev/null 2>&1
-fi
-
-oc login -u system:admin
-
-#
-# Kubevirt
-#
-info "Deploying KubeVirt"
-oc adm policy add-scc-to-user privileged -z kubevirt-privileged -n $KUBEVIRT_NS
-oc adm policy add-scc-to-user privileged -z kubevirt-controller -n $KUBEVIRT_NS
-oc adm policy add-scc-to-user privileged -z kubevirt-infra -n $KUBEVIRT_NS
-oc apply -f https://github.com/kubevirt/kubevirt/releases/download/v0.4.1/kubevirt.yaml
-
-info "Deploying examples"
-oc apply -f vm.yaml
-
-#
-# Allow developer and TSB to do everything
-#
-info "Granting additional permissions"
-oc adm policy add-cluster-role-to-user cluster-admin developer
-oc adm policy add-cluster-role-to-user cluster-admin system:service-account:openshift-infra:template-instance-controller
-
-#
-# Use the image with KubeVirt additions
-#
-info "Using demo OpenShift Web Console image"
-oc set image -n openshift-web-console deployment webconsole webconsole=mutism/origin-web-console:demo
+  if oc cluster status ; then
+    info "Reusing the existing 'oc cluster up setup'"
+  else
+    info "Setting up 'oc cluster up'"
+    oc cluster up --service-catalog --host-data-dir=$DATA_DIR --use-existing-config=true --skip-registry-check
+    info "Waiting for OpenShift to be fully up"
+    {
+     N=60
+     while [[ "$N" -gt 0 ]] ;
+     do
+       oc cluster status && break
+       sleep 1
+       N=$(( $N - 1 ))
+     done
+    } > /dev/null 2>&1
+  fi
+  
+  oc login -u system:admin
+  
+  #
+  # Kubevirt
+  #
+  info "Deploying KubeVirt"
+  oc adm policy add-scc-to-user privileged -z kubevirt-privileged -n $KUBEVIRT_NS
+  oc adm policy add-scc-to-user privileged -z kubevirt-controller -n $KUBEVIRT_NS
+  oc adm policy add-scc-to-user privileged -z kubevirt-infra -n $KUBEVIRT_NS
+  oc apply -f https://github.com/kubevirt/kubevirt/releases/download/v0.4.1/kubevirt.yaml
+  
+  info "Deploying examples"
+  oc apply -f vm.yaml
+  
+  #
+  # Allow developer and TSB to do everything
+  #
+  info "Granting additional permissions"
+  oc adm policy add-cluster-role-to-user cluster-admin developer
+  oc adm policy add-cluster-role-to-user cluster-admin system:service-account:openshift-infra:template-instance-controller
+  
+  #
+  # Use the image with KubeVirt additions
+  #
+  info "Using demo OpenShift Web Console image"
+  oc set image -n openshift-web-console deployment webconsole webconsole=mutism/origin-web-console:demo
 } > .logs 2>&1
 
 #
