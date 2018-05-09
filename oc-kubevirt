@@ -24,7 +24,7 @@ fi
 #
 set -e
 
-info "Setting up the CNV Demo"
+info "Setting up the CNV Demo (this can take a few minutes)"
 mkdir -p $DATA_DIR
 
 {
