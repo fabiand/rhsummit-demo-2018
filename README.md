@@ -28,6 +28,9 @@ This does not include:
 > **Note:** Take a look at the `.logs` file in case of an error or use
 > `tail -f .logs` during deployment to view the status.
 
+> **Note:** The required setup time is heavily depending on the speed of your
+> internet connection.
+
 The `oc-kubevirt` script does all necessary steps:
 
 ```bash
