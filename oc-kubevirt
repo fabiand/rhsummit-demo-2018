@@ -71,7 +71,7 @@ mkdir -p $DATA_DIR
   #
   # Use the image with KubeVirt additions
   #
-  info "Using demo OpenShift Web Console image"
+  info "Switching to the OpenShift Web Console demo image"
   oc set image -n openshift-web-console deployment webconsole webconsole=mutism/origin-web-console:demo
   set +x
 } > .logs 2>&1
