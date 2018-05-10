@@ -46,9 +46,7 @@ INFO Switching to the OpenShift Web Console demo image
 INFO Done, connection details:
 
 > Logged into "https://127.0.0.1:8443" as "system:admin" using existing credentials.
-> 
 ...
-> 
 > Using project "myproject".
 > OpenShift server started.
 > 
@@ -91,7 +89,6 @@ $ oc login -u developer
 Logged into "https://127.0.0.1:8443" as "developer" using existing credentials.
 ...
 Using project "myproject".
-
 $ oc new-app --template cirros-vm-template -p NAME=second
 --> Deploying template "myproject/cirros-vm-template" to project myproject
 
@@ -108,7 +105,6 @@ $ oc new-app --template cirros-vm-template -p NAME=second
     offlinevirtualmachine "second" created
 --> Success
     Run 'oc status' to view your app.
-
 $
 ```
 
