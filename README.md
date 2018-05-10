@@ -34,42 +34,53 @@ This does not include:
 The `oc-kubevirt` script does all necessary steps:
 
 ```bash
-$ ./oc-kubevirt
-INFO Setting up the CNV Demo
-INFO Setting up 'oc cluster up'
+$ time ./oc-kubevirt
+INFO Setting up the CNV Demo (this can take a few minutes)
+INFO Setting up 'oc cluster'
+$ oc cluster up --service-catalog --host-data-dir=/home/bob/rhsummit-demo-2018/_data --use-existing-config=true --skip-registry-check
 INFO Waiting for OpenShift to be fully up
+$ oc login -u system:admin
 INFO Deploying KubeVirt
+$ oc adm policy add-scc-to-user privileged -z kubevirt-privileged -n kube-system
+$ oc adm policy add-scc-to-user privileged -z kubevirt-controller -n kube-system
+$ oc adm policy add-scc-to-user privileged -z kubevirt-infra -n kube-system
+$ oc apply -f https://github.com/kubevirt/kubevirt/releases/download/v0.4.1/kubevirt.yaml
 INFO Deploying examples
+$ oc apply -f vm.yaml
 INFO Granting additional permissions
-INFO Using demo OpenShift Web Console image
+$ oc adm policy add-cluster-role-to-user cluster-admin developer
+$ oc adm policy add-cluster-role-to-user cluster-admin system:service-account:openshift-infra:template-instance-controller
+INFO Switching to the OpenShift Web Console demo image
+$ oc set image -n openshift-web-console deployment webconsole webconsole=mutism/origin-web-console:demo
 INFO Done, connection details:
-Logged into "https://127.0.0.1:8443" as "system:admin" using existing credentials.
 
-You have access to the following projects and can switch between them with 'oc project <projectname>':
-
-    default
-    kube-public
-    kube-service-catalog
-    kube-system
-  * myproject
-    openshift
-    openshift-infra
-    openshift-node
-    openshift-template-service-broker
-    openshift-web-console
-
-Using project "myproject".
-OpenShift server started.
-
-The server is accessible via web console at:
-    https://127.0.0.1:8443
-
-You are logged in as:
-    User:     developer
-    Password: <any value>
-
-To login as administrator:
-    oc login -u system:admin
+> Logged into "https://127.0.0.1:8443" as "system:admin" using existing credentials.
+> 
+> You have access to the following projects and can switch between them with 'oc project <projectname>':
+> 
+>     default
+>     kube-public
+>     kube-service-catalog
+>     kube-system
+>   * myproject
+>     openshift
+>     openshift-infra
+>     openshift-node
+>     openshift-template-service-broker
+>     openshift-web-console
+> 
+> Using project "myproject".
+> OpenShift server started.
+> 
+> The server is accessible via web console at:
+>     https://127.0.0.1:8443
+> 
+> You are logged in as:
+>     User:     developer
+>     Password: <any value>
+> 
+> To login as administrator:
+>     oc login -u system:admin
 
 INFO For CNV: Log into the web console as 'developer' and go to https://127.0.0.1:8443/console/project/myproject/overview
 $
