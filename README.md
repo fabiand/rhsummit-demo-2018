@@ -74,6 +74,8 @@ In order to start, stop, and connect to a virtual machine console you can use
 the `virtctl` tool:
 
 ```bash
+# Important: Login as admin (a known issue)
+$ oc login -u system:admin
 $ ./virtctl-v0.4.1-linux-amd64 start testvm
 $ ./virtctl-v0.4.1-linux-amd64 vnc testvm
 $ ./virtctl-v0.4.1-linux-amd64 stop testvm
