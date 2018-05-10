@@ -31,11 +31,11 @@ This does not include:
 > **Note:** The required setup time is heavily depending on the speed of your
 > internet connection.
 
-The `oc-kubevirt` script does all necessary steps, you can pass the `-v` flag
+The `oc-cnv` script does all necessary steps, you can pass the `-v` flag
 to see all the relevant calls done to perform the setup.
 
 ```bash
-$ ./oc-kubevirt
+$ ./oc-cnv
 INFO Setting up the CNV Demo (this can take a few minutes)
 INFO Setting up 'oc cluster'
 INFO Waiting for OpenShift to be fully up
@@ -93,5 +93,5 @@ work with the new entities.
 The setup can be cleaned using:
 
 ```bash
-$ ./oc-cluster clean
+$ ./oc-cnv clean
 ```

@@ -4,6 +4,7 @@
 
 VERBOSE=false
 DATA_DIR="$PWD/_data"
+CMD=$0
 
 exec 3>&1
 info() { echo -e "INFO $@" >&3 ; }
@@ -15,6 +16,7 @@ call() { $VERBOSE && echo -e "$ $@" >&3 ; eval "$@" ; }
 if [[ "$1" == "clean" ]]; then
   oc cluster down
   call sudo rm -rf $DATA_DIR /var/lib/origin/openshift.local.config/  /var/lib/origin/openshift.local.pv /var/lib/origin/openshift.local.volumes
+  info "Some errors are okay."
   exit 0
 fi
 
@@ -26,10 +28,10 @@ fi
 #
 set -e
 
-if [[ "$(oc get crd)" =~ .*kubevirt.* ]];
+if [[ "$(oc get crd 2>&/dev/null)" =~ .*kubevirt.* ]];
 then
   info "It looks like the CNV demo is already deployed. Aborting."
-  info "If you want to start fresh, run: oc-kubevirt clean"
+  info "If you want to start fresh, run: $CMD clean"
   exit 1
 fi
 
