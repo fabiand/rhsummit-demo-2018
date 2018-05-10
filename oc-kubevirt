@@ -26,6 +26,13 @@ fi
 #
 set -e
 
+if [[ "$(oc get crd)" =~ .*kubevirt.* ]];
+then
+  info "It looks like the CNV demo is already deployed. Aborting."
+  info "If you want to start fresh, run: oc-kubevirt clean"
+  exit 1
+fi
+
 info "Setting up the CNV Demo (this can take a few minutes)"
 mkdir -p $DATA_DIR
 
