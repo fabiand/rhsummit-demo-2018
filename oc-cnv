@@ -28,7 +28,7 @@ fi
 #
 set -e
 
-if [[ "$(oc get crd 2>&/dev/null)" =~ .*kubevirt.* ]];
+if [[ "$(oc get crd 2>/dev/null)" =~ .*kubevirt.* ]];
 then
   info "It looks like the CNV demo is already deployed. Aborting."
   info "If you want to start fresh, run: $CMD clean"
