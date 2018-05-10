@@ -47,18 +47,7 @@ INFO Done, connection details:
 
 > Logged into "https://127.0.0.1:8443" as "system:admin" using existing credentials.
 > 
-> You have access to the following projects and can switch between them with 'oc project <projectname>':
-> 
->     default
->     kube-public
->     kube-service-catalog
->     kube-system
->   * myproject
->     openshift
->     openshift-infra
->     openshift-node
->     openshift-template-service-broker
->     openshift-web-console
+...
 > 
 > Using project "myproject".
 > OpenShift server started.
@@ -80,6 +69,48 @@ $
 > **Note:** Once setup, the virtual machines and templates are accessible in
 > the project
 > [_My Project_](https://127.0.0.1:8443/console/project/myproject/overview)
+
+## virtctl
+
+In order to start, stop, and connect to a virtual machine console you can use
+the `virtctl` tool:
+
+```bash
+$ ./virtctl-v0.4.1-linux-amd64 start testvm
+$ ./virtctl-v0.4.1-linux-amd64 vnc testvm
+$ ./virtctl-v0.4.1-linux-amd64 stop testvm
+```
+
+## CLI
+
+The provided template can also be used to instantiate a new virtual machine from
+the CLI using:
+
+```bash
+$ oc login -u developer
+Logged into "https://127.0.0.1:8443" as "developer" using existing credentials.
+...
+Using project "myproject".
+
+$ oc new-app --template cirros-vm-template -p NAME=second
+--> Deploying template "myproject/cirros-vm-template" to project myproject
+
+     CirrOS Virtual Machine
+     ---------
+     OCP KubeVirt CirrOS VM template
+
+     * With parameters:
+        * NAME=second
+        * MEMORY=512Mi
+        * CPU_CORES=2
+
+--> Creating resources ...
+    offlinevirtualmachine "second" created
+--> Success
+    Run 'oc status' to view your app.
+
+$
+```
 
 ## User Guide
 
