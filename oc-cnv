@@ -93,7 +93,7 @@ mkdir -p $DATA_DIR
 info "Done, connection details:"
 echo ""
 {
-  oc login -u developer
+  oc login -u system:admin
   grep -A 10 started .logs
 } | sed -e "s/^/> /"
 echo ""
